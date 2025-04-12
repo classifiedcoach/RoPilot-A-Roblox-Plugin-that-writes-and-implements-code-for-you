@@ -486,7 +486,7 @@ function createChangeEntry(change, index)
 
 				if change.actionType == "ModifyExisting" or change.actionType == "AddOnly" then
 					local commentedPreviousCode = change.previousCode and 
-						string.gsub(change.previousCode, "([^\r\n]+)", "--[[ %1 ]]") or ""
+   						string.gsub(change.previousCode, "([^\r\n]+)", "-- %1") or ""
 					startIndex = string.find(currentSource, commentedPreviousCode .. "\n" .. change.newCode, 1, true)
 				elseif change.actionType == "NewScript" then
 					startIndex = 1
@@ -1089,7 +1089,7 @@ local function applyCodeChanges(apiResponse)
 					for i = 1, #prevCodeLines do
 						local index = lineNumber + i - 1
 						if index <= #lines then
-							lines[index] = "--[[ " .. lines[index] .. " ]]"
+							lines[index] = "-- " .. lines[index]
 						end
 					end
 
